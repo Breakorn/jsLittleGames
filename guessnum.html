@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            margin: 100px auto;
+            width: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h1>猜数字游戏</h1>
+        <p class="p1">我刚才随机选定了一个100以内的自然数。看你能否在10次以内猜中</p>
+        请猜数：<input type="text" ><button class="button1">提交</button>  <br>
+        <p class="p2">上次猜中的数：</p>
+        <p class="p3"></p>
+        <button class="button2">开始新游戏</button>
+    </div>
+    <script>
+        var input = document.querySelector('input'),
+            button1 = document.querySelector('.button1'),
+            button2 = document.querySelector('.button2'),
+            p2 = document.querySelector('.p2'),
+            p3 = document.querySelector('.p3')
+        // 整数的随机生成器
+        function getRandom(min,max){
+            max = Math.floor(max)
+            min = Math.ceil(min)
+            var randoms = Math.floor(Math.random()*(max - min + 1) + min)
+            return randoms
+        }
+        var ran = getRandom(0,100),
+            times = 0
+        button1.addEventListener('click',function(){
+            var num = parseInt(input.value)
+            input.value = ''
+            if(times <= 10){
+                if(num == ran){
+                    p2.innerHTML += num + '&nbsp;'
+                    p3.innerText = '恭喜你，猜对了'
+                    p3.style.backgroundColor = 'green'
+                    button1.disabled = true
+                }else if(num > ran){
+                    p2.innerHTML += num + '&nbsp;'
+                    p3.innerText = '大了'
+                    p3.style.backgroundColor = 'red'
+                }else{
+                    p2.innerHTML += num + '&nbsp;'
+                    p3.innerText = '小了'
+                    p3.style.backgroundColor = 'red'
+                }
+                times++
+            }else {
+                p3.innerText = '次数用尽'
+                button1.disabled = true
+            }
+        })
+        // 重置
+        button2.addEventListener('click',function(){
+            button1.disabled = false
+            p2.innerHTML ="上次猜中的数："
+            input.value = ''
+            p3.innerText = ''
+            times = 0
+            num = parseInt(input.value)
+        })
+    </script>
+</body>
+
+</html>
